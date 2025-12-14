@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Micro LLM Chat</title>
+  <style>
+    body { font-family: Arial; background: #111; color: #fff; }
+    textarea, button { width: 100%; margin-top: 10px; }
+    .box { max-width: 600px; margin: auto; padding: 20px; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>Micro LLM Chat 🤏🧠</h2>
+  <textarea id="prompt" rows="4" placeholder="Type something..."></textarea>
+  <button onclick="send()">Send</button>
+  <pre id="response"></pre>
+</div>
+
+<script>
+async function send() {
+  const prompt = document.getElementById("prompt").value;
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    body: "prompt=" + encodeURIComponent(prompt)
+  });
+  const data = await res.json();
+  document.getElementById("response").innerText = data.response;
+}
+</script>
+</body>
+</html>
